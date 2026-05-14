@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Developer Portfolio</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --surface-soft: #eef4ff;
+      --text: #172033;
+      --muted: #667085;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --accent: #0f172a;
+      --border: #dbe3ef;
+      --success: #047857;
+      --warning: #b45309;
+      --danger: #b91c1c;
+      --shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 34%),
+        radial-gradient(circle at 90% 20%, rgba(14, 165, 233, 0.10), transparent 30%),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 46%, #ffffff 100%);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(246, 248, 251, 0.84);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(219, 227, 239, 0.8);
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      font-size: 1.1rem;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), #0f172a);
+      box-shadow: 0 14px 28px rgba(37, 99, 235, 0.22);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.94rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-cta,
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 0 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: 0.2s ease;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .nav-cta,
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .nav-cta:hover,
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.18);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--accent);
+      border-color: var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      position: relative;
+      padding: 96px 0 70px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      top: -160px;
+      right: -100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.22), rgba(37, 99, 235, 0));
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent 80%);
+      pointer-events: none;
+    }
+
+    .hero-visual-notes {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .floating-note {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(219, 227, 239, 0.9);
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 800;
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
+      animation: floatNote 7s ease-in-out infinite;
+    }
+
+    .floating-note:nth-child(1) {
+      top: 16%;
+      right: 8%;
+    }
+
+    .floating-note:nth-child(2) {
+      bottom: 18%;
+      left: 4%;
+      animation-delay: 1.6s;
+    }
+
+    .floating-note:nth-child(3) {
+      top: 48%;
+      right: 2%;
+      animation-delay: 3s;
+    }
+
+    @keyframes floatNote {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.12fr 0.88fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--primary-dark);
+      font-weight: 800;
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.12);
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 7vw, 5.8rem);
+      line-height: 0.96;
+      letter-spacing: -0.075em;
+      max-width: 800px;
+      margin-bottom: 28px;
+    }
+
+    .hero-lead {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.13rem;
+      margin-bottom: 34px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 38px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      max-width: 720px;
+    }
+
+    .stat-card {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--border);
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 1.7rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 6px;
+    }
+
+    .stat-card span {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .profile-card {
+      position: relative;
+      padding: 28px;
+      border-radius: 32px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(249, 251, 255, 0.96)),
+        linear-gradient(135deg, rgba(37, 99, 235, 0.20), rgba(15, 23, 42, 0.12));
+      border: 1px solid rgba(219, 227, 239, 0.92);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .profile-card::before {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      right: -84px;
+      top: -84px;
+      border-radius: 50%;
+      background: rgba(37, 99, 235, 0.10);
+      z-index: -1;
+    }
+
+    .profile-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    .avatar {
+      width: 66px;
+      height: 66px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #1d4ed8, #0f172a);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+    }
+
+    .profile-top h2 {
+      font-size: 1.2rem;
+      letter-spacing: -0.03em;
+    }
+
+    .profile-top p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .profile-list {
+      display: grid;
+      gap: 12px;
+      list-style: none;
+      margin-bottom: 26px;
+    }
+
+    .profile-list li {
+      display: flex;
+      gap: 12px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .check {
+      flex: 0 0 24px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(37, 99, 235, 0.12);
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-size: 0.85rem;
+      font-weight: 900;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.83rem;
+      font-weight: 700;
+    }
+
+    .stack-marquee {
+      margin-top: 42px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+    }
+
+    .stack-track {
+      display: flex;
+      width: max-content;
+      gap: 10px;
+      padding: 14px;
+      animation: marquee 24s linear infinite;
+    }
+
+    .stack-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-size: 0.86rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    section {
+      padding: 76px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 28px;
+      margin-bottom: 32px;
+    }
+
+    .section-kicker {
+      color: var(--primary);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1.02;
+      letter-spacing: -0.06em;
+      max-width: 760px;
+    }
+
+    .section-head p {
+      max-width: 430px;
+      color: var(--muted);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .service-card {
+      position: relative;
+      min-height: 230px;
+      padding: 24px;
+      border-radius: var(--radius);
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+      overflow: hidden;
+      transition: 0.25s ease;
+    }
+
+    .service-card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), #0f172a);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: 0.25s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+    }
+
+    .service-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: var(--surface-soft);
+      color: var(--primary);
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+    .service-card h3,
+    .project-card h3 {
+      font-size: 1.18rem;
+      letter-spacing: -0.035em;
+      margin-bottom: 10px;
+    }
+
+    .service-card p,
+    .project-card p {
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .project-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: -8px 0 28px;
+    }
+
+    .filter-btn {
+      min-height: 42px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--muted);
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.is-active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .project-card.is-hidden {
+      display: none;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .project-card {
+      position: relative;
+      min-height: 370px;
+      padding: 26px;
+      border-radius: 28px;
+      background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(135deg, rgba(37, 99, 235, 0.20), rgba(15, 23, 42, 0.08)) border-box;
+      border: 1px solid transparent;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      overflow: hidden;
+      transition: 0.25s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 22px 55px rgba(15, 23, 42, 0.10);
+    }
+
+    .project-card::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      right: -70px;
+      top: -70px;
+      background: rgba(37, 99, 235, 0.08);
+      border-radius: 50%;
+    }
+
+    .project-top {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .project-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .project-body {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+
+    .project-body ul {
+      display: grid;
+      gap: 8px;
+      padding-left: 18px;
+      color: var(--muted);
+      margin-top: 14px;
+      font-size: 0.94rem;
+    }
+
+    .project-footer {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-role {
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    .project-link {
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 0.9rem;
+    }
+
+    .design-highlights {
+      padding-top: 0;
+    }
+
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .highlight-panel {
+      padding: 34px;
+      border-radius: 30px;
+      background: #0f172a;
+      color: #fff;
+      box-shadow: var(--shadow);
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .highlight-panel::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -90px;
+      bottom: -90px;
+      border-radius: 50%;
+      background: rgba(147, 197, 253, 0.16);
+    }
+
+    .highlight-panel h2 {
+      position: relative;
+      z-index: 1;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      margin-bottom: 18px;
+    }
+
+    .highlight-panel p {
+      position: relative;
+      z-index: 1;
+      color: #cbd5e1;
+      max-width: 520px;
+    }
+
+    .highlight-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .highlight-card {
+      padding: 26px;
+      border-radius: 24px;
+      background: #fff;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+    }
+
+    .highlight-card strong {
+      display: block;
+      color: var(--primary);
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .highlight-card h3 {
+      font-size: 1.2rem;
+      letter-spacing: -0.035em;
+      margin-bottom: 10px;
+    }
+
+    .highlight-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .process {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    .process .section-kicker,
+    .process .section-head p {
+      color: #93c5fd;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .process-card {
+      padding: 26px;
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .process-card span {
+      display: inline-grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: rgba(147, 197, 253, 0.14);
+      color: #bfdbfe;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+    .process-card h3 {
+      margin-bottom: 10px;
+      letter-spacing: -0.03em;
+    }
+
+    .process-card p {
+      color: #cbd5e1;
+    }
+
+    .cta-section {
+      padding: 90px 0;
+    }
+
+    .cta-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: center;
+      padding: 42px;
+      border-radius: 34px;
+      background: linear-gradient(135deg, #2563eb, #0f172a);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .cta-card h2 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+      margin-bottom: 14px;
+    }
+
+    .cta-card p {
+      color: #dbeafe;
+      max-width: 690px;
+    }
+
+    .cta-card .btn {
+      background: #fff;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    .site-footer {
+      padding: 32px 0;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .cta-card,
+      .highlight-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .services-grid,
+      .highlight-list,
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .nav {
+        min-height: 68px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .floating-note {
+        display: none;
+      }
+
+      .hero {
+        padding: 58px 0 44px;
+      }
+
+      h1 {
+        font-size: clamp(2.6rem, 15vw, 4rem);
+      }
+
+      .hero-stats,
+      .services-grid,
+      .highlight-list,
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 54px 0;
+      }
+
+      .project-card {
+        min-height: auto;
+        padding: 22px;
+      }
+
+      .project-top,
+      .project-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .cta-card {
+        padding: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="#top" class="brand" aria-label="Portfolio home">
+        <span class="brand-mark">JS</span>
+        <span>Jessie</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a href="#contact" class="nav-cta">Work with me</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-visual-notes" aria-hidden="true">
+        <span class="floating-note">WooCommerce fixes</span>
+        <span class="floating-note">Shopify updates</span>
+        <span class="floating-note">Security support</span>
+      </div>
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span></span> Full Stack Web Developer</div>
+          <h1>Websites built with custom functionality.</h1>
+          <p class="hero-lead">
+            I help businesses build, maintain, and improve WordPress, WooCommerce, and Shopify websites. My work covers frontend development, backend customization, theme development, plugin extensions, cart features, email workflows, and custom PHP or JavaScript solutions when builders and plugins are not enough.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">View projects</a>
+            <a href="#services" class="btn btn-secondary">See expertise</a>
+          </div>
+
+          <div class="hero-stats" aria-label="Portfolio highlights">
+            <div class="stat-card">
+              <strong>10+</strong>
+              <span>Years experience</span>
+            </div>
+            <div class="stat-card">
+              <strong>13</strong>
+              <span>Featured projects</span>
+            </div>
+            <div class="stat-card">
+              <strong>Full</strong>
+              <span>Frontend & backend</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="profile-card" aria-label="Developer profile summary">
+          <div class="profile-top">
+            <div class="avatar">JS</div>
+            <div>
+              <h2>Jessie</h2>
+              <p>WordPress / WooCommerce / Shopify Developer</p>
+            </div>
+          </div>
+
+          <ul class="profile-list">
+            <li><span class="check">✓</span><span>Custom WordPress theme and builder customization.</span></li>
+            <li><span class="check">✓</span><span>WooCommerce product, cart, checkout, and pricing enhancements.</span></li>
+            <li><span class="check">✓</span><span>Plugin extension, Contact Form 7 workflows, and PDF generation.</span></li>
+            <li><span class="check">✓</span><span>Modern frontend work with Tailwind CSS, TypeScript, SCSS, Shopify, and JavaScript.</span></li>
+          </ul>
+
+          <div class="tech-stack">
+            <span class="tag">WordPress</span>
+            <span class="tag">WooCommerce</span>
+            <span class="tag">PHP</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Tailwind CSS</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">SCSS</span>
+            <span class="tag">Elementor</span>
+            <span class="tag">Salient</span>
+            <span class="tag">Security Fixes</span>
+            <span class="tag">Shopify</span>
+          </div>
+        </aside>
+      </div>
+
+      <div class="container">
+        <div class="stack-marquee" aria-label="Technical skills">
+          <div class="stack-track">
+            <span class="stack-item">WordPress</span>
+            <span class="stack-item">WooCommerce</span>
+            <span class="stack-item">Shopify</span>
+            <span class="stack-item">PHP</span>
+            <span class="stack-item">JavaScript</span>
+            <span class="stack-item">Tailwind CSS</span>
+            <span class="stack-item">TypeScript</span>
+            <span class="stack-item">SCSS</span>
+            <span class="stack-item">Elementor</span>
+            <span class="stack-item">Salient</span>
+            <span class="stack-item">WordPress Security</span>
+            <span class="stack-item">Contact Form 7</span>
+            <span class="stack-item">WordPress</span>
+            <span class="stack-item">WooCommerce</span>
+            <span class="stack-item">Shopify</span>
+            <span class="stack-item">PHP</span>
+            <span class="stack-item">JavaScript</span>
+            <span class="stack-item">Tailwind CSS</span>
+            <span class="stack-item">TypeScript</span>
+            <span class="stack-item">SCSS</span>
+            <span class="stack-item">Elementor</span>
+            <span class="stack-item">Salient</span>
+            <span class="stack-item">WordPress Security</span>
+            <span class="stack-item">Contact Form 7</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Expertise</p>
+            <h2>Practical website development for real business requirements.</h2>
+          </div>
+          <p>
+            I combine theme-builder experience with custom development, so I can work inside existing systems and still create custom solutions when needed.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <div class="service-icon">01</div>
+            <h3>Frontend Development</h3>
+            <p>Responsive layouts, sliders, product pages, landing pages, and UI improvements using CSS, JavaScript, Tailwind CSS, TypeScript, and SCSS.</p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">02</div>
+            <h3>Backend Customization</h3>
+            <p>Custom PHP logic, backend configuration, plugin extensions, form workflows, and WordPress functionality beyond default builder options.</p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">03</div>
+            <h3>WooCommerce</h3>
+            <p>Product page customization, subscription options, quantity display, cart calculations, pricing logic, shipping setup, and eCommerce enhancements.</p>
+          </article>
+
+          <article class="service-card">
+            <div class="service-icon">04</div>
+            <h3>Integrations</h3>
+            <p>Contact Form 7 customization, quote cart workflows, email notifications, PDF brochure generation, and third-party plugin configuration.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="design-highlights">
+      <div class="container highlight-grid">
+        <div class="highlight-panel">
+          <div>
+            <p class="section-kicker">Portfolio Value</p>
+            <h2>Not just page building — problem solving.</h2>
+            <p>I work on real website problems: broken functionality, builder limitations, eCommerce logic, custom forms, plugin gaps, and security-related issues.</p>
+          </div>
+        </div>
+
+        <div class="highlight-list">
+          <article class="highlight-card">
+            <strong>01</strong>
+            <h3>Custom functionality</h3>
+            <p>When theme builders or plugins are limited, I create custom PHP, JavaScript, and CSS solutions.</p>
+          </article>
+
+          <article class="highlight-card">
+            <strong>02</strong>
+            <h3>eCommerce support</h3>
+            <p>I support product pages, cart calculations, subscription options, pricing, shipping, and store updates.</p>
+          </article>
+
+          <article class="highlight-card">
+            <strong>03</strong>
+            <h3>Security awareness</h3>
+            <p>I help investigate WordPress security issues, suspicious behavior, plugin concerns, and site maintenance problems.</p>
+          </article>
+
+          <article class="highlight-card">
+            <strong>04</strong>
+            <h3>Maintainable builds</h3>
+            <p>I prefer clean, practical solutions that can be maintained by future developers and website owners.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">Selected Work</p>
+            <h2>Featured WordPress, WooCommerce, and Shopify projects.</h2>
+          </div>
+          <p>
+            Some websites have changed platforms, changed themes, gone offline, or had functionality discontinued. The notes below clearly explain the current status.
+          </p>
+        </div>
+
+        <div class="project-filters" aria-label="Project filters">
+          <button class="filter-btn is-active" type="button" data-filter="all">All</button>
+          <button class="filter-btn" type="button" data-filter="wordpress">WordPress</button>
+          <button class="filter-btn" type="button" data-filter="woocommerce">WooCommerce</button>
+          <button class="filter-btn" type="button" data-filter="shopify">Shopify</button>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card" data-category="wordpress woocommerce">
+            <div class="project-top">
+              <div class="project-number">01</div>
+            </div>
+            <div class="project-body">
+              <h3>QURE Water</h3>
+              <p>Maintained and enhanced a WordPress/WooCommerce eCommerce website using Salient Theme Builder and custom solutions when builder options were limited.</p>
+              <ul>
+                <li>Customized product sliders and product page sections.</li>
+                <li>Displayed quantity and subscription options.</li>
+                <li>Implemented cart calculations for total order amounts.</li>
+                <li>Customized single product pages based on product requirements.</li>
+              </ul>
+            </div>
+            <div class="project-footer">
+              <span class="project-role">Role: Frontend & Backend</span>
+              <a class="project-link" href="https://qurealkalinewater.com" target="_blank" rel="noreferrer">Visit site →</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="wordpress">
+            <div class="project-top">
+              <div class="project-number">02</div>
+            </div>
+            <div class="project-body">
+              <h3>Seadrif Experts Library</h3>
+              <p>Created a custom WordPress extension for the Amelia Plugin to retrieve and display employee information that was not available through the plugin’s default features.</p>
+              <ul>
+                <li>Extended Amelia Plugin functionality.</li>
+                <li>Retrieved employee information from plugin data.</li>
+                <li>Displayed employee details on the frontend.</li>
+                <li>Avoided direct modification of plugin core files.</li>
+              </ul>
+            </div>
+            <div class="project-footer">
+              <span class="project-role">Role: Custom Plugin Extension</span>
+              <a class="project-link" href="https://seadrif.org/experts-library/" target="_blank" rel="noreferrer">Visit site →</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="wordpress">
+            <div class="project-top">
+              <div class="project-number">03</div>
+            </div>
+            <div class="project-body">
+              <h3>J810 Construction</h3>
+              <p>Created a WordPress website using the Salient Theme. I handled frontend and backend development while my partner handled content.</p>
+              <ul>
+                <li>Built responsive pages using Salient Theme.</li>
+                <li>Handled frontend layout and backend setup.</li>
+                <li>Customized theme options to match project needs.</li>
+                <li>Collaborated with a content partner.</li>
+              </ul>
+            </div>
+            <div class="project-footer">
+              <span class="project-role">Role: Frontend & Backend</span>
+              <a class="project-link" href="https://www.j810construction.com/" target="_blank" rel="noreferrer">Visit site →</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="wordpress">
+            <div class="project-top">
+              <div class="project-number">04</div>
+            </div>
+            <div class="project-body">
+              <h3>Streamline Health</h3>
+              <p>Developed a WordPress website independently, managing both frontend and backend work and customizing the theme based on project requirements.</p>
+              <ul>
+                <li>Handled independent development.</li>
+                <li>Customized WordPress theme structure.</li>
+                <li>Implemented page layouts and functionality.</li>
+                <li>Managed backend configuration.</li>
+              </ul>
+            </div>
+            <div class="project-footer">
+              <span class="project-role">Role: Independent Developer</span>
+              <a class="project-link" href="https://streamlinehealth.com/" target="_blank" rel="noreferrer">Visit site →</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="wordpress">
+            <div class="project-top">
+              <div class="project-number">05</div>
+            </div>
+            <div class="project-body">
+              <h3>The Clinic of North Texas</h3>
+              <p>Developed this WordPress website independently, handling frontend and backend development and customizing the theme to match requirements.</p>
+              <ul>
+                <li>Managed full website development.</li>
+                <li>Customized theme layouts and features.</li>
+                <li>Handled backend setup and configuration.</li>
+                <li>Implemented required pages and website functionality.</li>
+              </ul>
+            </div>
+            <div class="project-footer">
+              <span class="project-role">Role: Independent Developer</span>
+              <a class="project-link" href="https://clinicsofnorthtexas.com/" target="_blank" rel="noreferrer">Visit site →</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="wordpress">
+            <div class="project-top">
+              <div class="project-number">06</div>
+            </div>
+            <div class="project-body">
+              <h3>EIOWALAW</h3>
+              <p>Developed the original WordPress website independently, managing frontend and backend development and theme customization.</p>
+              <ul>
+                <li>Built the website independently.</li>
+                <li>Handled frontend and backend work.</li>
+                <li>Customized the WordPress theme.</li>
+                <li>Implemented required layouts and functionality.</li>
+              </ul>
+            </div>
+            <div class="project-footer">
+              <span class="project-role">Role: Independent Developer</span>
+              <a class="project-link" href="https://eiowalaw.com/" target="_blank" rel="noreferrer">Visit site →</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="wordpress">
+            <div class="project-top">
+              <div class="project-number">07</div>
+            </div>
+            <div class="project-body">
+              <h3>JagDefender</h3>
+              <p>Developed the WordPress website independently, handling frontend, backend, and theme customization based on project requirements.</p>
+              <ul>
+                <li>Managed WordPress development independently.</li>
+                <li>Built frontend layouts and backend functionality.</li>
+                <li>Customized theme behavior and presentation.</li>
+                <li>Implemented required website features.</li>
+              </ul>
+            </div>
+            <div class="project-footer">
+              <span class="project-role">Role: Independent Developer</span>
+              <a class="project-link" href="https://www.jagdefender.com/" target="_blank" rel="noreferrer">Visit site →</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="wordpress woocommerce">
+            <div class="project-top">
+              <div class="project-number">08</div>
+            </div>
+            <div class="project-body">
+              <h3>Healthy Ponds</h3>
+              <p>Developed this WordPress and WooCommerce project independently using Elementor, including eCommerce setup and third-party plugin configuration.</p>
+              <ul>
+                <li>Built pages using Elementor.</li>
+                <li>Configured WooCommerce functionality.</li>
+                <li>Set up shipping and pricing plugins.</li>
+                <li>Handled frontend and backend development.</li>
+              </ul>
+            </div>
+            <div class="project-footer">
+              <span class="project-role">Role: WooCommerce Developer</span>
+              <a class="project-link" href="https://healthyponds.com/" target="_blank" rel="noreferrer">Visit site →</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="wordpress">
+            <div class="project-top">
+              <div class="project-number">09</div>
+            </div>
+            <div class="project-body">
+              <h3>Healthcare Ecolab</h3>
+              <p>Worked on backend functionality, including Quote Cart development, Contact Form 7 email customization, and product brochure PDF generation.</p>
+              <ul>
+                <li>Developed Quote Cart functionality.</li>
+                <li>Customized Contact Form 7 email notifications.</li>
+                <li>Implemented product page PDF generation.</li>
+                <li>Allowed users to download product brochures.</li>
+              </ul>
+            </div>
+            <div class="project-footer">
+              <span class="project-role">Role: Backend Developer</span>
+              <a class="project-link" href="https://healthcare-au.ecolab.com/" target="_blank" rel="noreferrer">Visit site →</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="wordpress">
+            <div class="project-top">
+              <div class="project-number">10</div>
+            </div>
+            <div class="project-body">
+              <h3>Mighty Doodle</h3>
+              <p>Worked on frontend and backend development using a theme created by a colleague, with Tailwind CSS, TypeScript, and SCSS.</p>
+              <ul>
+                <li>Implemented layouts, styling, and functionality.</li>
+                <li>Worked with Tailwind CSS and TypeScript.</li>
+                <li>Used SCSS for maintainable styling.</li>
+                <li>Supported custom WordPress development requirements.</li>
+              </ul>
+            </div>
+            <div class="project-footer">
+              <span class="project-role">Role: Frontend & Backend</span>
+              <a class="project-link" href="https://mightydoodle.com/" target="_blank" rel="noreferrer">Visit site →</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="wordpress">
+            <div class="project-top">
+              <div class="project-number">11</div>
+            </div>
+            <div class="project-body">
+              <h3>Windana</h3>
+              <p>Worked on WordPress security fixes and functionality improvements for the Windana website, helping resolve website issues and strengthen overall site maintenance.</p>
+              <ul>
+                <li>Investigated and helped resolve WordPress security-related issues.</li>
+                <li>Reviewed website behavior and plugin-related concerns.</li>
+                <li>Fixed selected website functionality issues.</li>
+                <li>Supported ongoing maintenance and troubleshooting.</li>
+              </ul>
+            </div>
+            <div class="project-footer">
+              <span class="project-role">Role: Security & Functionality Support</span>
+              <a class="project-link" href="https://windana.org.au/" target="_blank" rel="noreferrer">Visit site →</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="shopify">
+            <div class="project-top">
+              <div class="project-number">12</div>
+            </div>
+            <div class="project-body">
+              <h3>Viking Ranges Australia</h3>
+              <p>Worked on a Shopify website for Viking Ranges Australia, supporting theme-related work, frontend updates, and store functionality improvements.</p>
+              <ul>
+                <li>Worked within the Shopify platform.</li>
+                <li>Handled frontend updates and theme adjustments.</li>
+                <li>Supported website functionality improvements.</li>
+                <li>Helped maintain the website based on business requirements.</li>
+              </ul>
+            </div>
+            <div class="project-footer">
+              <span class="project-role">Role: Shopify Developer</span>
+              <a class="project-link" href="https://vikingranges.com.au/" target="_blank" rel="noreferrer">Visit site →</a>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="shopify">
+            <div class="project-top">
+              <div class="project-number">13</div>
+            </div>
+            <div class="project-body">
+              <h3>AGA Living</h3>
+              <p>Worked on a Shopify website for AGA Living, supporting frontend implementation, theme updates, and website functionality improvements.</p>
+              <ul>
+                <li>Worked within the Shopify platform.</li>
+                <li>Implemented frontend and theme-related updates.</li>
+                <li>Supported website maintenance and functionality fixes.</li>
+                <li>Helped improve the website based on project requirements.</li>
+              </ul>
+            </div>
+            <div class="project-footer">
+              <span class="project-role">Role: Shopify Developer</span>
+              <a class="project-link" href="https://www.agaliving.com/" target="_blank" rel="noreferrer">Visit site →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="process" class="process">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="section-kicker">How I Work</p>
+            <h2>From builder limitations to custom solutions.</h2>
+          </div>
+          <p>
+            My approach is to first understand the existing website setup, then choose the safest and most maintainable way to implement the requirement.
+          </p>
+        </div>
+
+        <div class="process-grid">
+          <article class="process-card">
+            <span>01</span>
+            <h3>Review the current setup</h3>
+            <p>I check the theme, plugins, builder limitations, custom code, forms, WooCommerce settings, and backend structure before making changes.</p>
+          </article>
+
+          <article class="process-card">
+            <span>02</span>
+            <h3>Implement cleanly</h3>
+            <p>I use builder options when possible, but create custom PHP, JavaScript, CSS, or plugin extensions when the default tools are not enough.</p>
+          </article>
+
+          <article class="process-card">
+            <span>03</span>
+            <h3>Test and maintain</h3>
+            <p>I test frontend behavior, backend logic, forms, cart calculations, emails, responsive layouts, and user flows before final delivery.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="cta-section">
+      <div class="container">
+        <div class="cta-card">
+          <div>
+            <h2>Need website help?</h2>
+            <p>
+              I can help with WordPress maintenance, WooCommerce customization, Shopify updates, frontend fixes, backend development, theme customization, plugin extensions, and performance-focused improvements.
+            </p>
+          </div>
+          <a href="mailto:jessiesyrahfreelance@gmail.com" class="btn">Contact me</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Jessie. Web Developer Portfolio.</p>
+      <p>WordPress · WooCommerce · Shopify · PHP · JavaScript · Tailwind CSS</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const selectedFilter = button.dataset.filter;
+
+        filterButtons.forEach((btn) => btn.classList.remove('is-active'));
+        button.classList.add('is-active');
+
+        projectCards.forEach((card) => {
+          const categories = card.dataset.category.split(' ');
+          const shouldShow = selectedFilter === 'all' || categories.includes(selectedFilter);
+
+          card.classList.toggle('is-hidden', !shouldShow);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
